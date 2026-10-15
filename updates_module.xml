@@ -11,7 +11,7 @@
         <downloads>
             <downloadurl type="full" format="zip">https://github.com/bsakhanov/mod_wmarka_articles_slider/releases/download/v1.1.0/mod_wmarka_articles_slider_v1.1.0.zip</downloadurl>
         </downloads>
-        <sha256>27170b7ff57816578eb0f4df8168844def2bfaaa916f95699be72ca9b5328fc1</sha256>
+        <sha256>a5d21cec51d06128d3fc1bf470837e7f611e14d0524caf73e88c31fac3441f6c</sha256>
         <changelogurl>https://raw.githubusercontent.com/bsakhanov/mod_wmarka_articles_slider/main/changelog.xml</changelogurl>
         <maintainer>Beibit Sakhanov</maintainer>
         <maintainerurl>https://webmarka.kz</maintainerurl>
