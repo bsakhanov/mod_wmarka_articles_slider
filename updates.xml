@@ -2,16 +2,16 @@
 <updates>
     <update>
         <name>Webmarka Articles Slider (package)</name>
-        <description>Webmarka Articles Slider 1.1.0</description>
+        <description>Webmarka Articles Slider 1.1.1</description>
         <element>pkg_wmarka_articles_slider</element>
         <type>package</type>
         <client>site</client>
-        <version>1.1.0</version>
-        <infourl title="Webmarka Articles Slider 1.1.0">https://github.com/bsakhanov/mod_wmarka_articles_slider/releases/tag/v1.1.0</infourl>
+        <version>1.1.1</version>
+        <infourl title="Webmarka Articles Slider 1.1.1">https://github.com/bsakhanov/mod_wmarka_articles_slider/releases/tag/v1.1.1</infourl>
         <downloads>
-            <downloadurl type="full" format="zip">https://github.com/bsakhanov/mod_wmarka_articles_slider/releases/download/v1.1.0/pkg_wmarka_articles_slider_v1.1.0.zip</downloadurl>
+            <downloadurl type="full" format="zip">https://github.com/bsakhanov/mod_wmarka_articles_slider/releases/download/v1.1.1/pkg_wmarka_articles_slider_v1.1.1.zip</downloadurl>
         </downloads>
-        <sha256>35ce789da0af75517b18af60d0fec6ccd5e28f7670a582183d41195f92dff4a3</sha256>
+        <sha256>2c636b5968eac5c45bd922b4fae76be3c58284221284386d481fc141afb7321a</sha256>
         <changelogurl>https://raw.githubusercontent.com/bsakhanov/mod_wmarka_articles_slider/main/changelog.xml</changelogurl>
         <maintainer>Beibit Sakhanov</maintainer>
         <maintainerurl>https://webmarka.kz</maintainerurl>
