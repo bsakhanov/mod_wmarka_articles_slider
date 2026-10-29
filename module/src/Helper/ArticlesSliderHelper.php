@@ -957,7 +957,7 @@ class ArticlesSliderHelper implements DatabaseAwareInterface
         $space = StringHelper::strrpos($cut, ' ');
         $cut   = $space !== false && $space > $limit * 0.6 ? StringHelper::substr($cut, 0, $space) : StringHelper::substr($cut, 0, $limit);
 
-        return rtrim($cut, " \t,.;:—–-") . '…';
+        return preg_replace('/[\s,.;:—–-]+$/u', '', $cut) . '…';
     }
 
     /**
@@ -971,7 +971,7 @@ class ArticlesSliderHelper implements DatabaseAwareInterface
             return $text;
         }
 
-        return rtrim(implode(' ', \array_slice($words, 0, $limit)), ',.;:—–-') . '…';
+        return preg_replace('/[,.;:—–-]+$/u', '', implode(' ', \array_slice($words, 0, $limit))) . '…';
     }
 
     /**
