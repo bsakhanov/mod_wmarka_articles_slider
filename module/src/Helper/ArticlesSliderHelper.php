@@ -595,7 +595,7 @@ class ArticlesSliderHelper implements DatabaseAwareInterface
 
         $wa->addInlineScript(
             '(function(d,w){if(w.WmarkaUikitLoader){return;}w.WmarkaUikitLoader=1;'
-            . 'var f=' . json_encode($config, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP) . ';'
+            . 'var f=' . json_encode($config, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_INVALID_UTF8_SUBSTITUTE) . ';'
             . 'function put(t,a){var e=d.createElement(t);for(var k in a){e.setAttribute(k,a[k]);}if(t==="script"){e.async=false;}else{e.rel="stylesheet";}d.head.appendChild(e);}'
             . 'function run(){if(w.UIkit){return;}put("link",f.css);put("script",f.js);put("script",f.icons);}'
             . 'if(d.readyState==="loading"){d.addEventListener("DOMContentLoaded",run);}else{run();}'
@@ -1100,11 +1100,17 @@ class ArticlesSliderHelper implements DatabaseAwareInterface
                     'itemListElement' => $elements,
                 ];
 
-                $document->getWebAssetManager()->addInlineScript(
-                    json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG),
-                    ['name' => 'wmarka.jsonld.' . (int) $module->id],
-                    ['type' => 'application/ld+json']
-                );
+                // Битые байты в тексте (обрубок буквы) заменяются, а не роняют страницу: json_encode без
+                // JSON_INVALID_UTF8_SUBSTITUTE вернул бы false, и addInlineScript() упал бы с ошибкой 500
+                $json = json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_INVALID_UTF8_SUBSTITUTE);
+
+                if (\is_string($json)) {
+                    $document->getWebAssetManager()->addInlineScript(
+                        $json,
+                        ['name' => 'wmarka.jsonld.' . (int) $module->id],
+                        ['type' => 'application/ld+json']
+                    );
+                }
             }
         }
 

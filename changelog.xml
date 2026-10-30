@@ -3,6 +3,15 @@
     <changelog>
         <element>pkg_wmarka_articles_slider</element>
         <type>package</type>
+        <version>1.1.2</version>
+        <fix>
+            <item>Разметка schema.org (JSON-LD) больше не роняет страницу: неверные байты в тексте заменяются (JSON_INVALID_UTF8_SUBSTITUTE), а если кодирование не удалось — разметка модуля не выводится, вместо ошибки 500.</item>
+            <item>Schema.org markup (JSON-LD) no longer takes the page down: invalid bytes in the text are replaced (JSON_INVALID_UTF8_SUBSTITUTE), and if encoding fails the module's markup is skipped instead of a 500 error.</item>
+        </fix>
+    </changelog>
+    <changelog>
+        <element>pkg_wmarka_articles_slider</element>
+        <type>package</type>
         <version>1.1.1</version>
         <fix>
             <item>Обрезка текста с многоточием больше не режет буквы. Функция rtrim() со знаками «—», «–» в списке работает с байтами и срезала второй байт таких букв, как «р» и «ғ»; разметка schema.org (JSON-LD) с битой строкой не кодировалась, и страница с модулем падала с ошибкой 500. Хвост теперь снимается по знакам (preg_replace с флагом u).</item>
