@@ -1,0 +1,53 @@
+name: Release assets
+
+# При публикации выпуска собирает архивы сценарием build.sh, прикладывает их к выпуску
+# и публикует обновлённые списки версий для Joomla (updates.xml, updates_module.xml)
+# в ветке main — с суммами SHA-256 именно тех архивов, что лежат в выпуске.
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag to build and attach to
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  assets:
+    runs-on: ubuntu-latest
+    env:
+      TAG: ${{ github.event.release.tag_name || inputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TAG }}
+          fetch-depth: 0
+
+      - name: Build
+        run: bash build.sh && ls -la dist && cat dist/SHA256SUMS
+
+      - name: Attach to the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "$TAG" dist/*.zip dist/SHA256SUMS --clobber
+
+      - name: Publish the update lists
+        run: |
+          set -euo pipefail
+          cp updates.xml updates_module.xml /tmp/
+          git fetch -q origin main
+          git checkout -q -B main origin/main
+          cp /tmp/updates.xml /tmp/updates_module.xml .
+          if git diff --quiet -- updates.xml updates_module.xml; then
+            echo "Списки обновлений уже актуальны"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add updates.xml updates_module.xml
+          git commit -q -m "Списки обновлений: $TAG"
+          git push -q origin main
